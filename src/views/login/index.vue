@@ -3,22 +3,19 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">
-          {{ $t('login.title') }}
-        </h3>
-        <lang-select class="set-language" />
+        <h3 class="title">AROUND 管理系统</h3>
       </div>
 
       <el-form-item prop="account">
         <span class="svg-container">
-          <svg-icon icon-class="account" />
+          <svg-icon icon-class="user" />
         </span>
         <el-input
           ref="account"
           v-model="loginForm.account"
-          :placeholder="$t('login.account')"
+          placeholder="账号"
           name="account"
-          type="text"
+          type="account"
           tabindex="1"
           autocomplete="on"
         />
@@ -34,7 +31,7 @@
             ref="password"
             v-model="loginForm.password"
             :type="passwordType"
-            :placeholder="$t('login.password')"
+            placeholder="密码"
             name="password"
             tabindex="2"
             autocomplete="on"
@@ -48,29 +45,36 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="info" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
-        {{ $t('login.login') }}
-      </el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
       <div style="position:relative">
         <div class="tips">
-          <span>{{ $t('login.account') }}: 940121265@qq.com</span>
-          <span>{{ $t('login.password') }}: 123456</span>
+          <span>账号 : 940121265@qq.com</span>
+          <span>密码 : 123456</span>
         </div>
+
+        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
+          第三方登录
+        </el-button>
       </div>
     </el-form>
+
+    <el-dialog title="Or connect with" :visible.sync="showDialog">
+      Can not be simulated on local, so please combine you own business simulation! ! !
+      <br>
+      <br>
+      <br>
+      <social-sign />
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import LangSelect from '@/components/LangSelect'
-// import SocialSign from './components/SocialSignin'
-
-// import { login } from '@/api/user'
+import SocialSign from './components/SocialSignin'
 
 export default {
   name: 'Login',
-  components: { LangSelect },
+  components: { SocialSign },
   data() {
     const validateAccount = (rule, value, callback) => {
       if (value.length < 3) {
@@ -141,17 +145,9 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
-    checkCapslock({ shiftKey, key } = {}) {
-      if (key && key.length === 1) {
-        if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
-          this.capsTooltip = true
-        } else {
-          this.capsTooltip = false
-        }
-      }
-      if (key === 'CapsLock' && this.capsTooltip === true) {
-        this.capsTooltip = false
-      }
+    checkCapslock(e) {
+      const { key } = e
+      this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
     },
     showPwd() {
       if (this.passwordType === 'password') {
@@ -167,15 +163,16 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            console.log(this.otherQuery)
-            this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-            this.loading = false
-          }).catch(() => {
-            // 登录参数可能有误，请看store/modules/user.js
-            console.log('error submit!')
-            this.loading = false
-          })
+          this.$store.dispatch('user/login', this.loginForm)
+            .then(() => {
+              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+              this.loading = false
+            }).catch(() => {
+              // eslint-disable-next-line
+              //登录参数可能有误，请看store/modules/user.js
+              console.log('error submit!')
+              this.loading = false
+            })
         } else {
           console.log('error submit!!')
           return false
@@ -241,16 +238,16 @@ $cursor: #fff;
 
     input {
       background: transparent;
-      border: 0;
+      border: 0px;
       -webkit-appearance: none;
-      border-radius: 0;
+      border-radius: 0px;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
       height: 47px;
       caret-color: $cursor;
 
       &:-webkit-autofill {
-        box-shadow: 0 0 0 1000px $bg inset !important;
+        box-shadow: 0 0 0px 1000px $bg inset !important;
         -webkit-text-fill-color: $cursor !important;
       }
     }
@@ -266,7 +263,7 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg: #4a4b57;
+$bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
@@ -313,15 +310,6 @@ $light_gray:#eee;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
-    }
-
-    .set-language {
-      color: #fff;
-      position: absolute;
-      top: 3px;
-      font-size: 18px;
-      right: 0px;
-      cursor: pointer;
     }
   }
 

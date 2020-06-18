@@ -24,8 +24,8 @@ export default {
   },
   data() {
     return {
-      title: 'AROUND ADMIN',
-      logo: 'http://upyun.haigle.cn/logo-head.png'
+      title: 'Vue Element Admin',
+      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
     }
   }
 }

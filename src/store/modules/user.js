@@ -34,12 +34,12 @@ const actions = {
     const { account, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ account: account.trim(), password: password }).then(response => {
-      // login(userInfo).then(response => {
         const { data } = response
         commit('SET_TOKEN', data)
         setToken(data)
         resolve()
       }).catch(error => {
+        console.log(error)
         reject(error)
       })
     })
@@ -52,15 +52,16 @@ const actions = {
         const { data } = response
 
         if (!data) {
-          reject('验证失败，请重新登录.')
+          reject('验证失败, 请重新登录.')
         }
 
         const { roles, name, avatar, introduction } = data
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
-          reject('暂无权限，禁止访问!')
+          reject('暂无权限访问!')
         }
+
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
@@ -73,13 +74,18 @@ const actions = {
   },
 
   // user logout
-  logout({ commit, state }) {
+  logout({ commit, state, dispatch }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
         removeToken()
         resetRouter()
+
+        // reset visited views and cached views
+        // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
+        // dispatch('tagsView/delAllViews', null, { root: true })
+
         resolve()
       }).catch(error => {
         reject(error)

@@ -1,14 +1,13 @@
 <template>
   <div class="dashboard-panel-container">
     <div class="clearfix">
-      <pan-thumb :image="avatar ? avatar : 'http://upyun.haigle.cn/head.png'" style="float: left">
-        {{ $t('dashboard.title') }} :
-        <span v-for="item in roles" :key="item" class="pan-info-roles">{{ item }}</span>
+      <pan-thumb :image="avatar ? avatar : 'https://haigle.gitee.io/static_resources/head.png'" style="float: left">
+        权限 : <span v-for="item in roles" :key="item" class="pan-info-roles">{{ item }}</span>
       </pan-thumb>
       <github-corner style="position: absolute; top: 0; border: 0; right: 0;" />
       <div class="info-container">
         <span class="display_name">{{ name }}</span>
-        <span style="font-size:20px;padding-top:20px;display:inline-block;">{{ $t('dashboard.introduction') }}</span>
+        <span style="font-size:20px;padding-top:20px;display:inline-block;">永远相信 美好的事情即将发生</span>
       </div>
     </div>
     <div>
