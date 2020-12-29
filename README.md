@@ -14,7 +14,7 @@
 
 ***
 
-**欢迎你加入我们QQ群672036656，基本没人吱声，也许也没有几个人，如果遇到问题群主都会耐心解答。没有QQ的朋友可以给我发邮件haigle0127@foxmail.com**
+**联系我们：鹅群672036656**
 
 ***
 
@@ -36,4 +36,4 @@
 
 [MIT](https://gitee.com/haigle/around-admin/blob/master/LICENSE)
 
-around © 1993-2019.  [haigletech](www.haigle.cn)监制.
+around © 2015-2021.  [haigletech](www.haigle.cn)监制.
