@@ -12,6 +12,7 @@
 
 技术采用 [vue-element-admin](https://panjiachen.gitee.io/vue-element-admin-site/zh) 开源前端框架，它基于 [vue](https://cn.vuejs.org)（构建数据驱动的 web 界面的渐进式框架），[element-ui](https://element.eleme.cn) （基于 Vue 2.0 的桌面端组件库）
 
+1.0版本对应around服务端1.0版本。
 ***
 
 **联系我们：鹅群672036656**
