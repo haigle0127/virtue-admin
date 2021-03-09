@@ -23,7 +23,7 @@ export default {
     ])
   },
   created() {
-    if (!this.roles.includes('home-statistic')) {
+    if (!this.permissions.includes('home-statistic')) {
       this.currentRole = 'panelDashboard'
     }
   }

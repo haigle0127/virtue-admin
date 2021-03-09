@@ -49,7 +49,7 @@
 
       <div style="position:relative">
         <div class="tips">
-          <span>账号 : 940121265@qq.com</span>
+          <span>账号 : admin</span>
           <span>密码 : 123456</span>
         </div>
 
