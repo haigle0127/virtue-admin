@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">AROUND 管理系统</h3>
+        <h3 class="title">VIRTUE 管理系统</h3>
       </div>
 
       <el-form-item prop="account">
@@ -105,16 +105,16 @@ export default {
       showDialog: false,
       redirect: undefined,
       otherQuery: {},
-      backgroundUrl: 'https://haigle.gitee.io/static_resources/around/image/architectural-architectural-design-architecture-921319.png',
+      backgroundUrl: 'https://haigle.gitee.io/static_resources/VIRTUE/image/architectural-architectural-design-architecture-921319.png',
       backgroundUrlData: [
-        'https://haigle.gitee.io/static_resources/around/image/architectural-architectural-design-architecture-921319.png',
-        'https://haigle.gitee.io/static_resources/around/image/webdesign-layout-sketching-picjumbo-com.png',
-        'https://haigle.gitee.io/static_resources/around/image/blur-bright-close-up-1405773.png',
-        'https://haigle.gitee.io/static_resources/around/image/beach-coast-daytime-884169.png',
-        'https://haigle.gitee.io/static_resources/around/image/dirt-road-fashion-girl-144474.png',
-        'https://haigle.gitee.io/static_resources/around/image/back-view-beach-best-friends-2647973.png',
-        'https://haigle.gitee.io/static_resources/around/image/ancient-architecture-building-1010657.png',
-        'https://haigle.gitee.io/static_resources/around/image/delicious-freshness-fruits-2209382.png'
+        'https://haigle.gitee.io/static_resources/virtue/image/architectural-architectural-design-architecture-921319.png',
+        'https://haigle.gitee.io/static_resources/virtue/image/webdesign-layout-sketching-picjumbo-com.png',
+        'https://haigle.gitee.io/static_resources/virtue/image/blur-bright-close-up-1405773.png',
+        'https://haigle.gitee.io/static_resources/virtue/image/beach-coast-daytime-884169.png',
+        'https://haigle.gitee.io/static_resources/virtue/image/dirt-road-fashion-girl-144474.png',
+        'https://haigle.gitee.io/static_resources/virtue/image/back-view-beach-best-friends-2647973.png',
+        'https://haigle.gitee.io/static_resources/virtue/image/ancient-architecture-building-1010657.png',
+        'https://haigle.gitee.io/static_resources/virtue/image/delicious-freshness-fruits-2209382.png'
       ]
     }
   },

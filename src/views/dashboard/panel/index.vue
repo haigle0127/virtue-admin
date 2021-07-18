@@ -11,7 +11,7 @@
       </div>
     </div>
     <div>
-      <img :src="aroundPng" class="aroundPng" alt="">
+      <img :src="virtuePng" class="virtuePng" alt="">
     </div>
   </div>
 </template>
@@ -20,14 +20,14 @@
 import { mapGetters } from 'vuex'
 import PanThumb from '@/components/PanThumb'
 import GithubCorner from '@/components/GithubCorner'
-import aroundPng from '@/assets/dashboard_images/around.png'
+import virtuePng from '@/assets/dashboard_images/virtue.png'
 
 export default {
   name: 'DashboardPanel',
   components: { PanThumb, GithubCorner },
   data() {
     return {
-      aroundPng: aroundPng + '?' + +new Date()
+      virtuePng: virtuePng + '?' + +new Date()
     }
   },
   computed: {
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .aroundPng {
+  .virtuePng {
     display: block;
     width: 45%;
     margin: 0 auto;
