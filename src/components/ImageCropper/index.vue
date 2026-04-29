@@ -399,7 +399,7 @@ export default {
     // 绑定按键esc隐藏此插件事件
     document.addEventListener('keyup', this.closeHandler)
   },
-  destroyed() {
+  unmounted() {
     document.removeEventListener('keyup', this.closeHandler)
   },
   methods: {

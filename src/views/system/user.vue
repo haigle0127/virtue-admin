@@ -1,14 +1,14 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.name" placeholder="用户名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter(1)">搜索</el-button>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
+      <el-input v-model="listQuery.name" placeholder="用户名" style="width: 200px;" class="filter-item" @keyup.enter="handleFilter" />
+      <el-button v-waves class="filter-item" type="primary" :icon="$icons.Search" @click="handleFilter(1)">搜索</el-button>
+      <el-button v-waves class="filter-item" type="primary" :icon="$icons.Edit" @click="handleCreate">添加</el-button>
     </div>
     <!-- 列表 -->
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%;">
       <el-table-column label="头像" width="90px" align="center" prop="avatar">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-image v-if="scope.row.avatar !== null" :src="`${scope.row.avatar}`" style="width: 20px; height: 20px" />
           <el-image v-if="scope.row.avatar === null" src="https://haigle.gitee.io/static_resources/head.png" style="width: 20px; height: 20px" />
         </template>
@@ -17,18 +17,18 @@
       <el-table-column align="center" label="用户名" prop="username" />
       <el-table-column align="center" label="电话" prop="phone" />
       <el-table-column width="250" label="操作" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button-group>
-            <el-link type="primary" icon="el-icon-edit" @click="handleUpdate(row)">编辑</el-link>
-            <el-link type="danger" icon="el-icon-delete" size="small" @click="handleDelete(row)">删除</el-link>
+            <el-link type="primary" :icon="$icons.Edit" @click="handleUpdate(row)">编辑</el-link>
+            <el-link type="danger" :icon="$icons.Delete" size="small" @click="handleDelete(row)">删除</el-link>
           </el-button-group>
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="handleFilter" />
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.pageSize" :total="total" @pagination="handleFilter" />
     <!-- 增加，修改-->
-    <el-dialog :title="dialogStatus+'用户'" :visible.sync="dialogFormVisible">
+    <el-dialog v-model="dialogFormVisible" :title="dialogStatus+'用户'">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="temp.username" />
@@ -50,10 +50,12 @@
           />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogStatus==='添加'?createData():updateData()">确 定</el-button>
-      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogStatus==='添加'?createData():updateData()">确 定</el-button>
+        </div>
+      </template>
     </el-dialog>
   </div>
 </template>

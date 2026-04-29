@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import { ElMessageBox, ElMessage } from 'element-plus'
 import store from '@/store/index.js'
 import { getToken } from '@/utils/auth.js'
 
@@ -47,7 +47,7 @@ service.interceptors.response.use(
 
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 200) {
-      Message({
+      ElMessage({
         message: res.message || '请求错误呀。',
         type: 'error',
         duration: 5 * 1000
@@ -56,7 +56,7 @@ service.interceptors.response.use(
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         // to re-login
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+        ElMessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
           confirmButtonText: 'Re-Login',
           cancelButtonText: 'Cancel',
           type: 'warning'
@@ -73,7 +73,7 @@ service.interceptors.response.use(
   },
   error => {
     console.log('err' + error) // for debug
-    Message({
+    ElMessage({
       message: '网络错误，请稍后重试。',
       type: 'error',
       duration: 5 * 1000

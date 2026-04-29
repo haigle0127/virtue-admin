@@ -1,31 +1,31 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate(0)">添加</el-button>
+      <el-button v-waves class="filter-item" type="primary" :icon="$icons.Edit" @click="handleCreate(0)">添加</el-button>
     </div>
     <el-table v-if="tableShow" :data="list" row-key="id" border lazy :load="load" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" style="width: 100%">
       <el-table-column width="180" label="名称" prop="name" />
       <el-table-column width="180" label="别名" prop="ename" />
       <el-table-column width="180" label="权限标识" prop="power">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tag type="success" effect="plain" size="mini">{{ scope.row.power }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column width="180" label="简介" prop="description" />
       <el-table-column label="创建时间" prop="createTime" />
       <el-table-column width="250" label="操作" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button-group>
-            <el-link type="primary" icon="el-icon-edit" @click="handleUpdate(row)">编辑</el-link>
-            <el-link type="success" icon="el-icon-edit" @click="handleCreate(row.id)">添加下一级</el-link>
-            <el-link type="danger" icon="el-icon-delete" @click="handleDelete(row)">删除</el-link>
+            <el-link type="primary" :icon="$icons.Edit" @click="handleUpdate(row)">编辑</el-link>
+            <el-link type="success" :icon="$icons.Edit" @click="handleCreate(row.id)">添加下一级</el-link>
+            <el-link type="danger" :icon="$icons.Delete" @click="handleDelete(row)">删除</el-link>
           </el-button-group>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 增加，修改-->
-    <el-dialog :title="dialogStatus+'权限'" :visible.sync="dialogFormVisible">
+    <el-dialog v-model="dialogFormVisible" :title="dialogStatus+'权限'">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="名称" prop="name">
           <el-input v-model="temp.name" />
@@ -40,10 +40,12 @@
           <el-input v-model="temp.description" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogStatus==='添加'?createData():updateData()">确定</el-button>
-      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button type="primary" @click="dialogStatus==='添加'?createData():updateData()">确定</el-button>
+        </div>
+      </template>
     </el-dialog>
   </div>
 </template>

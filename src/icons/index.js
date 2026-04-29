@@ -1,5 +1,1 @@
-import Vue from 'vue'
-import SvgIcon from '@/components/SvgIcon/index.vue'// svg component
-
-// register globally
-Vue.component('svg-icon', SvgIcon)
+// svg-icon 组件已在 main.js 中通过 app.component() 全局注册

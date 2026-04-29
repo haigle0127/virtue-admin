@@ -1,5 +1,5 @@
 <template>
-  <el-select ref="dragSelect" v-model="selectVal" v-bind="$attrs" class="drag-select" multiple v-on="$listeners">
+  <el-select ref="dragSelect" v-model="selectVal" v-bind="$attrs" class="drag-select" multiple>
     <slot />
   </el-select>
 </template>
@@ -50,16 +50,14 @@ export default {
 
 <style lang="scss" scoped>
 .drag-select {
-  ::v-deep {
-    .sortable-ghost {
-      opacity: .8;
-      color: #fff !important;
-      background: #42b983 !important;
-    }
+  :deep(.sortable-ghost) {
+    opacity: .8;
+    color: #fff !important;
+    background: #42b983 !important;
+  }
 
-    .el-tag {
-      cursor: pointer;
-    }
+  :deep(.el-tag) {
+    cursor: pointer;
   }
 }
 </style>

@@ -3,8 +3,8 @@
     <!-- 搜索啊 -->
     <div class="filter-container">
       <el-input v-model="listQuery.name" placeholder="名称" style="width: 200px;" class="filter-item" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter(1)">搜索</el-button>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
+      <el-button v-waves class="filter-item" type="primary" :icon="$icons.Search" @click="handleFilter(1)">搜索</el-button>
+      <el-button v-waves class="filter-item" type="primary" :icon="$icons.Edit" @click="handleCreate">添加</el-button>
     </div>
     <!-- 角色列表 -->
     <el-table :data="list" border fit highlight-current-row style="width: 100%">
@@ -13,18 +13,18 @@
       <el-table-column width="180" label="简介" prop="description" />
       <el-table-column label="创建时间" prop="createTime" />
       <el-table-column width="250" label="操作" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button-group>
-            <el-link type="primary" icon="el-icon-edit" @click="handleUpdate(row)">编辑</el-link>
-            <el-link type="danger" icon="el-icon-delete" size="small" @click="handleDelete(row)">删除</el-link>
+            <el-link type="primary" :icon="$icons.Edit" @click="handleUpdate(row)">编辑</el-link>
+            <el-link type="danger" :icon="$icons.Delete" size="small" @click="handleDelete(row)">删除</el-link>
           </el-button-group>
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="handleFilter" />
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.pageSize" :total="total" @pagination="handleFilter" />
     <!-- 增加，修改 -->
-    <el-dialog :title="dialogStatus+'角色'" :visible.sync="dialogFormVisible">
+    <el-dialog v-model="dialogFormVisible" :title="dialogStatus+'角色'">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="90px" style="width: 400px; margin-left:50px;">
         <el-form-item label="名称" prop="name">
           <el-input v-model="temp.name" />
@@ -46,10 +46,12 @@
           />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogStatus==='添加'?createData():updateData()">确定</el-button>
-      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button type="primary" @click="dialogStatus==='添加'?createData():updateData()">确定</el-button>
+        </div>
+      </template>
     </el-dialog>
   </div>
 </template>

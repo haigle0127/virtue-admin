@@ -21,7 +21,7 @@
         />
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+      <el-tooltip v-model:visible="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon icon-class="password" />
@@ -37,7 +37,7 @@
             autocomplete="on"
             @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
-            @keyup.enter.native="handleLogin"
+            @keyup.enter="handleLogin"
           />
           <span class="show-pwd" @click="showPwd">
             <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
@@ -45,7 +45,7 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.prevent="handleLogin">登录</el-button>
 
       <div style="position:relative">
         <div class="tips">
@@ -59,7 +59,7 @@
       </div>
     </el-form>
 
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
+    <el-dialog v-model="showDialog" title="Or connect with">
       Can not be simulated on local, so please combine you own business simulation! ! !
       <br>
       <br>
@@ -141,7 +141,7 @@ export default {
       this.$refs.password.focus()
     }
   },
-  destroyed() {
+  unmounted() {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {

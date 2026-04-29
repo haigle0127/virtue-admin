@@ -1,11 +1,13 @@
 <template>
   <div class="app-container">
     <el-card class="box-card">
-      <div slot="header">
-        <a class="link-type link-title" target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/theme.html">
-          Theme documentation
-        </a>
-      </div>
+      <template #header>
+        <div>
+          <a class="link-type link-title" target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/theme.html">
+            Theme documentation
+          </a>
+        </div>
+      </template>
       <div class="box-item">
         <span class="field-label">Change Theme : </span>
         <el-switch v-model="theme" />
@@ -34,15 +36,15 @@
     </div>
 
     <div class="block">
-      <el-button type="primary" icon="el-icon-edit" />
-      <el-button type="primary" icon="el-icon-share" />
-      <el-button type="primary" icon="el-icon-delete" />
-      <el-button type="primary" icon="el-icon-search">
+      <el-button type="primary" :icon="$icons.Edit" />
+      <el-button type="primary" :icon="$icons.Share" />
+      <el-button type="primary" :icon="$icons.Delete" />
+      <el-button type="primary" :icon="$icons.Search">
         Search
       </el-button>
       <el-button type="primary">
         Upload
-        <i class="el-icon-upload el-icon-right" />
+        <el-icon class="el-icon--right"><Upload /></el-icon>
       </el-button>
     </div>
 

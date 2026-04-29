@@ -98,7 +98,7 @@ export default {
   deactivated() {
     this.destroyTinymce()
   },
-  destroyed() {
+  unmounted() {
     this.destroyTinymce()
   },
   methods: {
@@ -220,10 +220,8 @@ export default {
 }
 
 .tinymce-container {
-  ::v-deep {
-    .mce-fullscreen {
-      z-index: 10000;
-    }
+  :deep(.mce-fullscreen) {
+    z-index: 10000;
   }
 }
 

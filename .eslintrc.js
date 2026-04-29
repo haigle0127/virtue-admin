@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: 'module'
   },
   env: {
@@ -16,14 +16,16 @@ module.exports = {
   rules: {
     "vue/max-attributes-per-line": [2, {
       "singleline": 10,
-      "multiline": {
-        "max": 1,
-        "allowFirstLine": false
-      }
+      "multiline": 1
     }],
     "vue/singleline-html-element-content-newline": "off",
     "vue/multiline-html-element-content-newline":"off",
-    "vue/name-property-casing": ["error", "PascalCase"],
+    "vue/component-definition-name-casing": ["error", "PascalCase"],
+    "vue/no-v-model-argument": "off",
+    "vue/multi-word-component-names": "off",
+    "vue/no-multiple-template-root": "off",
+    "vue/no-mutating-props": "off",
+    "vue/no-reserved-component-names": "off",
     "vue/no-v-html": "off",
     'accessor-pairs': 2,
     'arrow-spacing': [2, {
@@ -151,6 +153,7 @@ module.exports = {
     'no-useless-constructor': 2,
     'no-useless-escape': 0,
     'no-whitespace-before-property': 2,
+    'no-prototype-builtins': 'off',
     'no-with': 2,
     'one-var': [2, {
       'initialized': 'never'

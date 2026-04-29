@@ -1,7 +1,7 @@
 import store from '@/store/index.js'
 
 export default {
-  inserted(el, binding, vnode) {
+  mounted(el, binding, vnode) {
     const { value } = binding
     const permissions = store.getters && store.getters.permissions
 

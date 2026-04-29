@@ -1,7 +1,6 @@
 import path from 'path'
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue2'
-import vueJsx from '@vitejs/plugin-vue2-jsx'
+import vue from '@vitejs/plugin-vue'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 export default defineConfig(({ mode }) => {
@@ -9,7 +8,6 @@ export default defineConfig(({ mode }) => {
     base: '/',
     plugins: [
       vue(),
-      vueJsx(),
       createSvgIconsPlugin({
         iconDirs: [path.resolve(process.cwd(), 'src/icons/svg')],
         symbolId: 'icon-[name]',
@@ -32,8 +30,7 @@ export default defineConfig(({ mode }) => {
     optimizeDeps: {
       esbuildOptions: {
         loader: {
-          '.js': 'jsx',
-          '.vue': 'jsx'
+          '.js': 'jsx'
         }
       }
     },
