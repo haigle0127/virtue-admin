@@ -1,4 +1,4 @@
-import drag from './drag'
+import drag from './drag.js'
 
 const install = function(Vue) {
   Vue.directive('el-drag-dialog', drag)

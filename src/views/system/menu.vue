@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import { list, save, update, remove } from '@/api/system/menu'
-import waves from '@/directive/waves' // waves directive
+import { list, save, update, remove } from '@/api/system/menu.js'
+import waves from '@/directive/waves/index.js' // waves directive
 export default {
   name: 'Menu',
   directives: { waves },

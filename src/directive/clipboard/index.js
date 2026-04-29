@@ -1,4 +1,4 @@
-import Clipboard from './clipboard'
+import Clipboard from './clipboard.js'
 
 const install = function(Vue) {
   Vue.directive('Clipboard', Clipboard)

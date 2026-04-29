@@ -18,8 +18,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import PanThumb from '@/components/PanThumb'
-import GithubCorner from '@/components/GithubCorner'
+import PanThumb from '@/components/PanThumb/index.vue'
+import GithubCorner from '@/components/GithubCorner/index.vue'
 import virtuePng from '@/assets/dashboard_images/virtue.png'
 
 export default {

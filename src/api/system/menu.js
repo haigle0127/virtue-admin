@@ -1,5 +1,5 @@
-import request from '@/utils/request'
-import { param } from '@/utils'
+import request from '@/utils/request.js'
+import { param } from '@/utils/index.js'
 
 export function list(query) {
   const data = param(query)

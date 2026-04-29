@@ -59,9 +59,9 @@
 </template>
 
 <script>
-import { list, save, update, remove, getRoleAllList, getUserRoleList } from '@/api/system/user'
-import waves from '@/directive/waves' // waves directive
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import { list, save, update, remove, getRoleAllList, getUserRoleList } from '@/api/system/user.js'
+import waves from '@/directive/waves/index.js' // waves directive
+import Pagination from '@/components/Pagination/index.vue' // secondary package based on el-pagination
 export default {
   name: 'User',
   directives: { waves },

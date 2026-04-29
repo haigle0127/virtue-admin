@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { toggleClass } from '@/utils'
+import { toggleClass } from '@/utils/index.js'
 import '@/assets/custom-theme/index.css' // the theme changed version element-ui css
 
 export default {

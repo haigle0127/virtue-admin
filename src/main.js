@@ -11,15 +11,17 @@ import './styles/element-variables.scss'
 
 import '@/styles/index.scss' // global css
 
-import App from './App'
-import store from './store'
-import router from './router'
+import App from './App.vue'
+import store from './store/index.js'
+import router from './router/index.js'
 
 import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
 
-import * as filters from './filters' // global filters
+import * as filters from './filters/index.js' // global filters
+
+import 'virtual:svg-icons-register'
 
 /**
  * If you don't want to use mock-server
@@ -48,8 +50,7 @@ Object.keys(filters).forEach(key => {
 Vue.config.productionTip = false
 
 new Vue({
-  el: '#app',
   router,
   store,
   render: h => h(App)
-})
+}).$mount('#app')

@@ -1,4 +1,4 @@
-import waves from './waves'
+import waves from './waves.js'
 
 const install = function(Vue) {
   Vue.directive('waves', waves)

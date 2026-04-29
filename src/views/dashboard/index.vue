@@ -6,8 +6,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import statisticDashboard from './statistic'
-import panelDashboard from './panel'
+import statisticDashboard from './statistic/index.vue'
+import panelDashboard from './panel/index.vue'
 
 export default {
   name: 'Dashboard',

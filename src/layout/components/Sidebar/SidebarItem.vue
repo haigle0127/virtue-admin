@@ -25,11 +25,11 @@
 </template>
 
 <script>
-import path from 'path'
-import { isExternal } from '@/utils/validate'
-import Item from './Item'
-import AppLink from './Link'
-import FixiOSBug from './FixiOSBug'
+import { isExternal } from '@/utils/validate.js'
+import { resolvePath } from '@/utils/resolve-path.js'
+import Item from './Item.vue'
+import AppLink from './Link.vue'
+import FixiOSBug from './FixiOSBug.js'
 
 export default {
   name: 'SidebarItem',
@@ -88,7 +88,7 @@ export default {
       if (isExternal(this.basePath)) {
         return this.basePath
       }
-      return path.resolve(this.basePath, routePath)
+      return resolvePath(this.basePath, routePath)
     }
   }
 }

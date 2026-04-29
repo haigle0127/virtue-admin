@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import SocialSign from './components/SocialSignin'
+import SocialSign from './components/SocialSignin.vue'
 
 export default {
   name: 'Login',
