@@ -226,8 +226,9 @@ const initTags = () => {
 
 // 新增 tag
 const addTags = () => {
-  const { name } = currentRoute.value
+  const { name, path } = currentRoute.value
   if (name) {
+    if (path.startsWith('/redirect/')) return
     setSelectTag(currentRoute.value)
     tagsViewStore.addView(currentRoute.value)
   }
@@ -285,12 +286,11 @@ const closeRightTags = (view) => {
 // 重新加载
 const refreshSelectedTag = async(view) => {
   const target = view || currentRoute.value
-  tagsViewStore.delCachedView()
-  const { path, query } = target
+  tagsViewStore.delCachedView(target)
+  const { fullPath } = target
   await nextTick()
   replace({
-    path: '/redirect' + path,
-    query: query
+    path: '/redirect' + fullPath
   })
 }
 
@@ -388,6 +388,14 @@ watch(
   &__scroll {
     flex: 1;
     overflow: hidden;
+
+    :deep(.el-scrollbar__wrap) {
+      overflow-y: hidden !important;
+    }
+
+    :deep(.el-scrollbar__bar.is-vertical) {
+      display: none !important;
+    }
   }
 
   &__wrapper {
@@ -423,7 +431,7 @@ watch(
     display: inline-flex;
     align-items: center;
     height: calc(100% - 6px);
-    margin-left: 2px;
+    margin-left: 0;
     font-size: 12px;
     cursor: pointer;
     background: #fff;
@@ -432,11 +440,11 @@ watch(
     box-sizing: border-box;
 
     &:first-of-type {
-      margin-left: 8px;
+      margin-left: 4px;
     }
 
     &:last-of-type {
-      margin-right: 8px;
+      margin-right: 4px;
     }
 
     &--label {
