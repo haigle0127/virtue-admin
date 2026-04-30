@@ -1,17 +1,23 @@
 <template>
   <div class="login-container">
     <video
-      class="login-video"
-      src="@/assets/video/blackhole.mp4"
+      v-if="isVideoBackground"
+      class="login-background"
+      :src="backgroundUrl"
       autoplay
       muted
       loop
       playsinline
     />
+    <div
+      v-else
+      class="login-background"
+      :style="{ backgroundImage: 'url(' + backgroundUrl + ')' }"
+    />
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">VIRTUE 管理系统</h3>
+        <h3 class="title"> VIRTUE </h3>
       </div>
 
       <el-form-item prop="account">
@@ -100,7 +106,7 @@ export default {
     }
     return {
       loginForm: {
-        account: '940121265@qq.com',
+        account: 'admin',
         password: '123456'
       },
       loginRules: {
@@ -113,17 +119,19 @@ export default {
       showDialog: false,
       redirect: undefined,
       otherQuery: {},
-      backgroundUrl: 'https://haigle.gitee.io/static_resources/VIRTUE/image/architectural-architectural-design-architecture-921319.png',
+      backgroundUrl: 'https://www.haigle.cn/image/image-4.jpg',
       backgroundUrlData: [
-        'https://haigle.gitee.io/static_resources/virtue/image/architectural-architectural-design-architecture-921319.png',
-        'https://haigle.gitee.io/static_resources/virtue/image/webdesign-layout-sketching-picjumbo-com.png',
-        'https://haigle.gitee.io/static_resources/virtue/image/blur-bright-close-up-1405773.png',
-        'https://haigle.gitee.io/static_resources/virtue/image/beach-coast-daytime-884169.png',
-        'https://haigle.gitee.io/static_resources/virtue/image/dirt-road-fashion-girl-144474.png',
-        'https://haigle.gitee.io/static_resources/virtue/image/back-view-beach-best-friends-2647973.png',
-        'https://haigle.gitee.io/static_resources/virtue/image/ancient-architecture-building-1010657.png',
-        'https://haigle.gitee.io/static_resources/virtue/image/delicious-freshness-fruits-2209382.png'
+        'https://www.haigle.cn/image/image-1.jpg',
+        'https://www.haigle.cn/image/image-2.jpg',
+        'https://www.haigle.cn/image/image-3.jpg',
+        'https://www.haigle.cn/image/image-4.jpg',
+        'https://www.haigle.cn/video/blackhole.mp4'
       ]
+    }
+  },
+  computed: {
+    isVideoBackground() {
+      return /\.(mp4|webm|ogg)(\?.*)?$/i.test(this.backgroundUrl)
     }
   },
   watch: {
@@ -287,23 +295,24 @@ $light_gray:#eee;
   overflow: hidden;
   position: relative;
 
-  .login-video {
+  .login-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    background-size: cover;
+    background-position: center;
     z-index: 0;
   }
 
   .login-form {
     position: relative;
     z-index: 1;
-    position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 240px 35px 0;
     margin: 0 auto;
     overflow: hidden;
   }
