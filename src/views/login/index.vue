@@ -1,5 +1,13 @@
 <template>
-  <div class="login-container" :style="'background:url('+ backgroundUrl +');'">
+  <div class="login-container">
+    <video
+      class="login-video"
+      src="@/assets/video/blackhole.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+    />
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
@@ -277,8 +285,21 @@ $light_gray:#eee;
   min-height: 100%;
   width: 100%;
   overflow: hidden;
+  position: relative;
+
+  .login-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
 
   .login-form {
+    position: relative;
+    z-index: 1;
     position: relative;
     width: 520px;
     max-width: 100%;
