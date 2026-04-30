@@ -32,7 +32,9 @@ router.beforeEach(async(to, from, next) => {
           next({ ...to, replace: true })
         } catch (error) {
           await store.dispatch('user/resetToken')
-          ElMessage.error(error || '有错误。')
+          if (!(error instanceof Error)) {
+            ElMessage.error(error || '有错误。')
+          }
           next(`/login?redirect=${to.path}`)
           NProgress.done()
         }

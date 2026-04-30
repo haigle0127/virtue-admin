@@ -46,6 +46,15 @@ service.interceptors.response.use(
     const res = response.data
 
     // if the custom code is not 20000, it is judged as an error.
+    if (res.code === 500) {
+      ElMessage({
+        message: res.message || '服务器内部错误',
+        type: 'error',
+        duration: 5 * 1000
+      })
+      return Promise.reject(new Error(res.message || 'Error'))
+    }
+
     if (res.code !== 200) {
       ElMessage({
         message: res.message || '请求错误呀。',
