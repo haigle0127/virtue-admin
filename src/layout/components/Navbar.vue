@@ -1,11 +1,11 @@
 <template>
   <div class="navbar">
-    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <hamburger id="hamburger-container" :is-active="appStore.sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
-      <template v-if="device!=='mobile'">
+      <template v-if="appStore.device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
 
         <error-log class="errLog-container right-menu-item hover-effect" />
@@ -20,7 +20,7 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar ? avatar : 'https://haigle.gitee.io/static_resources/head.png'+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img :src="userStore.avatar ? userStore.avatar : 'https://haigle.gitee.io/static_resources/head.png'+'?imageView2/1/w/80/h/80'" class="user-avatar">
           <el-icon><CaretBottom /></el-icon>
         </div>
         <template #dropdown>
@@ -44,40 +44,29 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup lang="ts">
+import { useRouter, useRoute } from 'vue-router'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
 import ErrorLog from '@/components/ErrorLog/index.vue'
 import Screenfull from '@/components/Screenfull/index.vue'
 import SizeSelect from '@/components/SizeSelect/index.vue'
 import Search from '@/components/HeaderSearch/index.vue'
+import { useAppStore } from '@/store/modules/app.js'
+import { useUserStore } from '@/store/modules/user.js'
 
-export default {
-  components: {
-    Breadcrumb,
-    Hamburger,
-    ErrorLog,
-    Screenfull,
-    SizeSelect,
-    Search
-  },
-  computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar',
-      'device'
-    ])
-  },
-  methods: {
-    toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
-    },
-    async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-    }
-  }
+const router = useRouter()
+const route = useRoute()
+const appStore = useAppStore()
+const userStore = useUserStore()
+
+const toggleSideBar = () => {
+  appStore.toggleSideBar()
+}
+
+const logout = async() => {
+  await userStore.logout()
+  router.push(`/login?redirect=${route.fullPath}`)
 }
 </script>
 

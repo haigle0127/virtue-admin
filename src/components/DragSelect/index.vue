@@ -4,7 +4,7 @@
   </el-select>
 </template>
 
-<script>
+<script lang="ts">
 import Sortable from 'sortablejs'
 
 export default {

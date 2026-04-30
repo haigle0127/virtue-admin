@@ -134,7 +134,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 'use strict'
 import request from '@/utils/request.js'
 import language from './utils/language.js'

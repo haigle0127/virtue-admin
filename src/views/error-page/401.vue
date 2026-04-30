@@ -34,7 +34,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import errGif from '@/assets/401_images/401.gif'
 
 export default {

@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { scrollTo } from '@/utils/scroll-to.js'
 
 export default {

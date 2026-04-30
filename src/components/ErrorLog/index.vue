@@ -48,25 +48,18 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ErrorLog',
-  data() {
-    return {
-      dialogTableVisible: false
-    }
-  },
-  computed: {
-    errorLogs() {
-      return this.$store.getters.errorLogs
-    }
-  },
-  methods: {
-    clearAll() {
-      this.dialogTableVisible = false
-      this.$store.dispatch('errorLog/clearErrorLog')
-    }
-  }
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+import { useErrorLogStore } from '@/store/modules/errorLog.js'
+
+const errorLogStore = useErrorLogStore()
+const dialogTableVisible = ref(false)
+
+const errorLogs = computed(() => errorLogStore.logs)
+
+const clearAll = () => {
+  dialogTableVisible.value = false
+  errorLogStore.clearErrorLog()
 }
 </script>
 

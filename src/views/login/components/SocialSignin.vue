@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // import openWindow from '@/utils/open-window.js'
 
 export default {

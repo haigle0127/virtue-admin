@@ -2,7 +2,7 @@
   <span>{{ displayValue }}</span>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'CountTo',
   props: {

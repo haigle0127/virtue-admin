@@ -74,7 +74,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { toggleClass } from '@/utils/index.js'
 import '@/assets/custom-theme/index.css' // the theme changed version element-ui css
 

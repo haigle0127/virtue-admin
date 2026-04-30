@@ -1,59 +1,47 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+    <div v-if="device==='mobile'&&appStore.sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
-    <div :class="{hasTagsView:needTagsView}" class="main-container">
-      <div :class="{'fixed-header':fixedHeader}">
+    <div :class="{hasTagsView:settingsStore.tagsView}" class="main-container">
+      <div :class="{'fixed-header':settingsStore.fixedHeader}">
         <navbar />
-        <tags-view v-if="needTagsView" />
+        <tags-view v-if="settingsStore.tagsView" />
       </div>
       <app-main />
-      <right-panel v-if="showSettings">
+      <right-panel v-if="settingsStore.showSettings">
         <settings />
       </right-panel>
     </div>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from 'vue'
 import RightPanel from '@/components/RightPanel/index.vue'
 import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components/index.js'
-import ResizeMixin from './mixin/ResizeHandler.js'
-import { mapState } from 'vuex'
+import useResizeHandler from './composables/useResizeHandler.js'
+import { useAppStore } from '@/store/modules/app.js'
+import { useSettingsStore } from '@/store/modules/settings.js'
 
-export default {
-  name: 'Layout',
-  components: {
-    AppMain,
-    Navbar,
-    RightPanel,
-    Settings,
-    Sidebar,
-    TagsView
-  },
-  mixins: [ResizeMixin],
-  computed: {
-    ...mapState({
-      sidebar: state => state.app.sidebar,
-      device: state => state.app.device,
-      showSettings: state => state.settings.showSettings,
-      needTagsView: state => state.settings.tagsView,
-      fixedHeader: state => state.settings.fixedHeader
-    }),
-    classObj() {
-      return {
-        hideSidebar: !this.sidebar.opened,
-        openSidebar: this.sidebar.opened,
-        withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
-      }
-    }
-  },
-  methods: {
-    handleClickOutside() {
-      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
-    }
+const appStore = useAppStore()
+const settingsStore = useSettingsStore()
+
+useResizeHandler()
+
+const classObj = computed(() => {
+  const sidebar = appStore.sidebar
+  return {
+    hideSidebar: !sidebar.opened,
+    openSidebar: sidebar.opened,
+    withoutAnimation: sidebar.withoutAnimation,
+    mobile: appStore.device === 'mobile'
   }
+})
+
+const device = computed(() => appStore.device)
+
+const handleClickOutside = () => {
+  appStore.closeSideBar(false)
 }
 </script>
 
@@ -93,7 +81,7 @@ export default {
   }
 
   .hideSidebar .fixed-header {
-    width: calc(100% - 54px)
+    width: calc(100% - 64px)
   }
 
   .mobile .fixed-header {

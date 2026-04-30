@@ -28,39 +28,15 @@
   </el-card>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useUserStore } from '@/store/modules/user.js'
 import PanThumb from '@/components/PanThumb/index.vue'
 import Mallki from '@/components/TextHoverEffect/Mallki.vue'
 
-export default {
-  components: { PanThumb, Mallki },
+const userStore = useUserStore()
 
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        success: 'success',
-        pending: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
-  data() {
-    return {
-      statisticsData: {
-        article_count: 1024,
-        pageviews_count: 1024
-      }
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'name',
-      'avatar',
-      'roles'
-    ])
-  }
-}
+const avatar = computed(() => userStore.avatar)
 </script>
 
 <style lang="scss">
@@ -103,7 +79,7 @@ export default {
     background-color: #fff;
     margin: auto;
     box-shadow: none!important;
-    /deep/ .pan-info {
+    :deep(.pan-info) {
       box-shadow: none!important;
     }
   }

@@ -5,7 +5,7 @@
   </svg>
 </template>
 
-<script>
+<script lang="ts">
 // doc: https://panjiachen.github.io/vue-element-admin-site/feature/component/svg-icon.html#usage
 import { isExternal } from '@/utils/validate.js'
 

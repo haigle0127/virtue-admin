@@ -37,7 +37,7 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 import Todo from './Todo.vue'
 
 const STORAGE_KEY = 'todos'

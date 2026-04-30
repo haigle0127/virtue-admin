@@ -109,7 +109,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // source:https://github.com/wemake-services/vue-material-input/blob/master/src/components/MaterialInput.vue
 
 export default {

@@ -29,7 +29,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // import { getToken } from 'api/qiniu'
 
 export default {

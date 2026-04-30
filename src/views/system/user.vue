@@ -60,7 +60,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { list, save, update, remove, getRoleAllList, getUserRoleList } from '@/api/system/user.js'
 import waves from '@/directive/waves/index.js' // waves directive
 import Pagination from '@/components/Pagination/index.vue' // secondary package based on el-pagination

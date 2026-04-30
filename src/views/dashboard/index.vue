@@ -4,29 +4,18 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import statisticDashboard from './statistic/index.vue'
-import panelDashboard from './panel/index.vue'
+<script setup lang="ts">
+import { shallowRef, onMounted } from 'vue'
+import { useUserStore } from '@/store/modules/user.js'
+import StatisticDashboard from './statistic/index.vue'
+import PanelDashboard from './panel/index.vue'
 
-export default {
-  name: 'Dashboard',
-  components: { statisticDashboard, panelDashboard },
-  data() {
-    return {
-      currentRole: 'statisticDashboard'
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'roles',
-      'permissions'
-    ])
-  },
-  created() {
-    if (!this.permissions.includes('home-statistic')) {
-      this.currentRole = 'panelDashboard'
-    }
+const userStore = useUserStore()
+const currentRole = shallowRef(StatisticDashboard)
+
+onMounted(() => {
+  if (!userStore.permissions.includes('home-statistic')) {
+    currentRole.value = PanelDashboard
   }
-}
+})
 </script>

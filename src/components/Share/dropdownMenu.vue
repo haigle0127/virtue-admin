@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   props: {
     items: {
@@ -37,7 +37,7 @@ export default {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 $n: 9; //和items.length 相同
 $t: .1s;
 .share-dropdown-menu {

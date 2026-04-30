@@ -16,28 +16,18 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useUserStore } from '@/store/modules/user.js'
 import PanThumb from '@/components/PanThumb/index.vue'
 import GithubCorner from '@/components/GithubCorner/index.vue'
 import virtuePng from '@/assets/dashboard_images/virtue.png'
 
-export default {
-  name: 'DashboardPanel',
-  components: { PanThumb, GithubCorner },
-  data() {
-    return {
-      virtuePng: virtuePng + '?' + +new Date()
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'name',
-      'avatar',
-      'roles'
-    ])
-  }
-}
+const userStore = useUserStore()
+
+const name = computed(() => userStore.name)
+const avatar = computed(() => userStore.avatar)
+const roles = computed(() => userStore.roles)
 </script>
 
 <style lang="scss" scoped>

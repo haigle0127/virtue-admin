@@ -29,7 +29,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import GithubCorner from '@/components/GithubCorner/index.vue'
 import PanelGroup from './components/PanelGroup.vue'
 import LineChart from './components/LineChart.vue'

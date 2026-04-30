@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import screenfull from 'screenfull'
 
 export default {

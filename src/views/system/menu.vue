@@ -50,7 +50,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { list, save, update, remove } from '@/api/system/menu.js'
 import waves from '@/directive/waves/index.js' // waves directive
 export default {

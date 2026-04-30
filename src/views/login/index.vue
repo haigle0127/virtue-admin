@@ -14,7 +14,7 @@
       class="login-background"
       :style="{ backgroundImage: 'url(' + backgroundUrl + ')' }"
     />
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+    <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
         <h3 class="title"> VIRTUE </h3>
@@ -25,7 +25,7 @@
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="account"
+          ref="accountRef"
           v-model="loginForm.account"
           placeholder="账号"
           name="account"
@@ -42,14 +42,14 @@
           </span>
           <el-input
             :key="passwordType"
-            ref="password"
+            ref="passwordRef"
             v-model="loginForm.password"
             :type="passwordType"
             placeholder="密码"
             name="password"
             tabindex="2"
             autocomplete="on"
-            @keyup.native="checkCapslock"
+            @keyup="checkCapslock"
             @blur="capsTooltip = false"
             @keyup.enter="handleLogin"
           />
@@ -67,7 +67,7 @@
           <span>密码 : 123456</span>
         </div>
 
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
+        <el-button class="thirdparty-button" type="primary" @click="showDialog = true">
           第三方登录
         </el-button>
       </div>
@@ -83,152 +83,131 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref, reactive, computed, watch, onMounted, nextTick } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useUserStore } from '@/store/modules/user.js'
 import SocialSign from './components/SocialSignin.vue'
 
-export default {
-  name: 'Login',
-  components: { SocialSign },
-  data() {
-    const validateAccount = (rule, value, callback) => {
-      if (value.length < 3) {
-        callback(new Error('请输入邮箱、手机或用户名'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('密码必须大于五位'))
-      } else {
-        callback()
-      }
-    }
-    return {
-      loginForm: {
-        account: 'admin',
-        password: '123456'
-      },
-      loginRules: {
-        account: [{ required: true, trigger: 'blur', validator: validateAccount }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
-      },
-      passwordType: 'password',
-      capsTooltip: false,
-      loading: false,
-      showDialog: false,
-      redirect: undefined,
-      otherQuery: {},
-      backgroundUrl: 'https://www.haigle.cn/image/image-4.jpg',
-      backgroundUrlData: [
-        'https://www.haigle.cn/image/image-1.jpg',
-        'https://www.haigle.cn/image/image-2.jpg',
-        'https://www.haigle.cn/image/image-3.jpg',
-        'https://www.haigle.cn/image/image-4.jpg',
-        'https://www.haigle.cn/video/blackhole.mp4'
-      ]
-    }
-  },
-  computed: {
-    isVideoBackground() {
-      return /\.(mp4|webm|ogg)(\?.*)?$/i.test(this.backgroundUrl)
-    }
-  },
-  watch: {
-    $route: {
-      handler: function(route) {
-        const query = route.query
-        if (query) {
-          this.redirect = query.redirect
-          this.otherQuery = this.getOtherQuery(query)
-        }
-      },
-      immediate: true
-    }
-  },
-  created() {
-    // window.addEventListener('storage', this.afterQRScan)
-    this.getBackgroundUrl()
-  },
-  mounted() {
-    if (this.loginForm.account === '') {
-      this.$refs.account.focus()
-    } else if (this.loginForm.password === '') {
-      this.$refs.password.focus()
-    }
-  },
-  unmounted() {
-    // window.removeEventListener('storage', this.afterQRScan)
-  },
-  methods: {
-    checkCapslock(e) {
-      const { key } = e
-      this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
-    },
-    showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
-      }
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
-    },
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-              this.loading = false
-            }).catch(() => {
-              // eslint-disable-next-line
-              //登录参数可能有误，请看store/modules/user.js
-              console.log('error submit!')
-              this.loading = false
-            })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
-    getOtherQuery(query) {
-      return Object.keys(query).reduce((acc, cur) => {
-        if (cur !== 'redirect') {
-          acc[cur] = query[cur]
-        }
-        return acc
-      }, {})
-    },
-    // eslint-disable-next-line vue/no-dupe-keys
-    getBackgroundUrl() {
-      const data = this.backgroundUrlData
-      const index = Math.floor((Math.random() * data.length))
-      this.backgroundUrl = data[index]
-    }
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
+const route = useRoute()
+const router = useRouter()
+const userStore = useUserStore()
+
+const loginFormRef = ref()
+const accountRef = ref()
+const passwordRef = ref()
+
+const loginForm = reactive({
+  account: 'admin',
+  password: '123456'
+})
+
+const validateAccount = (rule, value, callback) => {
+  if (value.length < 3) {
+    callback(new Error('请输入邮箱、手机或用户名'))
+  } else {
+    callback()
   }
 }
+
+const validatePassword = (rule, value, callback) => {
+  if (value.length < 5) {
+    callback(new Error('密码必须大于五位'))
+  } else {
+    callback()
+  }
+}
+
+const loginRules = {
+  account: [{ required: true, trigger: 'blur', validator: validateAccount }],
+  password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+}
+
+const passwordType = ref('password')
+const capsTooltip = ref(false)
+const loading = ref(false)
+const showDialog = ref(false)
+const redirect = ref(undefined)
+const otherQuery = ref({})
+const backgroundUrl = ref('https://www.haigle.cn/image/image-4.jpg')
+const backgroundUrlData = [
+  'https://www.haigle.cn/image/image-1.jpg',
+  'https://www.haigle.cn/image/image-2.jpg',
+  'https://www.haigle.cn/image/image-3.jpg',
+  'https://www.haigle.cn/image/image-4.jpg',
+  'https://www.haigle.cn/video/blackhole.mp4'
+]
+
+const isVideoBackground = computed(() => {
+  return /\.(mp4|webm|ogg)(\?.*)?$/i.test(backgroundUrl.value)
+})
+
+watch(() => route.query, (query) => {
+  if (query) {
+    redirect.value = query.redirect
+    otherQuery.value = getOtherQuery(query)
+  }
+}, { immediate: true })
+
+onMounted(() => {
+  if (loginForm.account === '') {
+    accountRef.value.focus()
+  } else if (loginForm.password === '') {
+    passwordRef.value.focus()
+  }
+})
+
+const checkCapslock = (e) => {
+  const { key } = e
+  capsTooltip.value = key && key.length === 1 && (key >= 'A' && key <= 'Z')
+}
+
+const showPwd = () => {
+  if (passwordType.value === 'password') {
+    passwordType.value = ''
+  } else {
+    passwordType.value = 'password'
+  }
+  nextTick(() => {
+    passwordRef.value.focus()
+  })
+}
+
+const handleLogin = () => {
+  loginFormRef.value.validate(valid => {
+    if (valid) {
+      loading.value = true
+      userStore.login(loginForm)
+        .then(() => {
+          router.push({ path: redirect.value || '/', query: otherQuery.value })
+          loading.value = false
+        }).catch(() => {
+          console.log('error submit!')
+          loading.value = false
+        })
+    } else {
+      console.log('error submit!!')
+      return false
+    }
+  })
+}
+
+const getOtherQuery = (query) => {
+  return Object.keys(query).reduce((acc, cur) => {
+    if (cur !== 'redirect') {
+      acc[cur] = query[cur]
+    }
+    return acc
+  }, {})
+}
+
+const getBackgroundUrl = () => {
+  const data = backgroundUrlData
+  const index = Math.floor((Math.random() * data.length))
+  backgroundUrl.value = data[index]
+}
+
+getBackgroundUrl()
 </script>
 
 <style lang="scss">

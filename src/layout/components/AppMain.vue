@@ -1,25 +1,22 @@
 <template>
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
-      <keep-alive :include="cachedViews">
+      <keep-alive :include="tagsViewStore.cachedViews">
         <router-view :key="key" />
       </keep-alive>
     </transition>
   </section>
 </template>
 
-<script>
-export default {
-  name: 'AppMain',
-  computed: {
-    cachedViews() {
-      return this.$store.state.tagsView.cachedViews
-    },
-    key() {
-      return this.$route.path
-    }
-  }
-}
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { useTagsViewStore } from '@/store/modules/tagsView.js'
+
+const route = useRoute()
+const tagsViewStore = useTagsViewStore()
+
+const key = computed(() => route.path)
 </script>
 
 <style lang="scss" scoped>

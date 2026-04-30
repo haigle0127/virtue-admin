@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import XLSX from 'xlsx'
 
 export default {

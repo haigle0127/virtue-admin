@@ -55,7 +55,7 @@
   </el-row>
 </template>
 
-<script>
+<script lang="ts">
 import CountTo from '@/components/CountTo/index.vue'
 
 export default {

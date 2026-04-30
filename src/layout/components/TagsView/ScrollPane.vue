@@ -4,7 +4,7 @@
   </el-scrollbar>
 </template>
 
-<script>
+<script lang="ts">
 const tagAndTagSpacing = 4 // tagAndTagSpacing
 
 export default {

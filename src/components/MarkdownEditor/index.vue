@@ -2,7 +2,7 @@
   <div :id="id" />
 </template>
 
-<script>
+<script lang="ts">
 // deps for editor
 import 'codemirror/lib/codemirror.css' // codemirror
 import 'tui-editor/dist/tui-editor.css' // editor ui
