@@ -39,7 +39,7 @@ export default defineConfig(({ mode }) => {
       port: 9527,
       open: true,
       proxy: {
-        '/api': {
+        '/admin-api': {
           target: 'http://localhost:9981',
           changeOrigin: true
         }

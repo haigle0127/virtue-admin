@@ -1,12 +1,12 @@
-<p align="center">
-  <img width="320" src="http://haigle.gitee.io/static_resources/virtue/image/title.png">
+<p style="text-align: center;">
+  <img width="381" src=".image/title.png"  alt="">
 </p>
 
 ## 简介
 
 [virtue-admin](https://gitee.com/haigle/virtue-admin) 是 [virtue](https://gitee.com/haigle/virtue) 后端配套的前端管理框架。
 
-基于 [vue-element-admin](https://gitee.com/panjiachen/vue-element-admin) 开源方案构建，采用 Vue 3 + Element Plus + Vite 技术栈。
+Vue 3 + Element Plus + Vite 技术栈。
 
 ## 技术栈
 
