@@ -3,8 +3,14 @@ import { defineStore } from 'pinia'
 export const useTagsViewStore = defineStore('tagsView', {
   state: () => ({
     visitedViews: [],
-    cachedViews: []
+    cachedViews: [],
+    selectedTag: {}
   }),
+
+  getters: {
+    getVisitedViews: (state) => state.visitedViews,
+    getSelectedTag: (state) => state.selectedTag
+  },
 
   actions: {
     addView(view) {
@@ -28,6 +34,10 @@ export const useTagsViewStore = defineStore('tagsView', {
       }
     },
 
+    setSelectedTag(view) {
+      this.selectedTag = view
+    },
+
     delView(view) {
       this.delVisitedView(view)
       this.delCachedView(view)
@@ -47,9 +57,13 @@ export const useTagsViewStore = defineStore('tagsView', {
       return [...this.visitedViews]
     },
 
-    delCachedView(view) {
-      const index = this.cachedViews.indexOf(view.name)
-      index > -1 && this.cachedViews.splice(index, 1)
+    delCachedView(view?) {
+      if (view) {
+        const index = this.cachedViews.indexOf(view.name)
+        index > -1 && this.cachedViews.splice(index, 1)
+      } else {
+        this.cachedViews = []
+      }
       return [...this.cachedViews]
     },
 
@@ -77,6 +91,25 @@ export const useTagsViewStore = defineStore('tagsView', {
         this.cachedViews = []
       }
       return [...this.cachedViews]
+    },
+
+    delLeftViews(view) {
+      const index = this.visitedViews.findIndex(v => v.path === view.path)
+      if (index > -1) {
+        const affixTags = this.visitedViews.filter(v => v.meta.affix)
+        const leftTags = this.visitedViews.slice(0, index)
+        const keepTags = [...affixTags.filter(tag => !leftTags.some(lt => lt.path === tag.path)), ...leftTags.filter(lt => lt.path === view.path)]
+        this.visitedViews = keepTags
+      }
+      return [...this.visitedViews]
+    },
+
+    delRightViews(view) {
+      const index = this.visitedViews.findIndex(v => v.path === view.path)
+      if (index > -1) {
+        this.visitedViews = this.visitedViews.slice(0, index + 1)
+      }
+      return [...this.visitedViews]
     },
 
     delAllViews(view?) {

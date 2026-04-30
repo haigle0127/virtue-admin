@@ -192,7 +192,7 @@ const handleLogin = () => {
   })
 }
 
-const getOtherQuery = (query) => {
+function getOtherQuery(query) {
   return Object.keys(query).reduce((acc, cur) => {
     if (cur !== 'redirect') {
       acc[cur] = query[cur]
