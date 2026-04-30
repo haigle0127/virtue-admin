@@ -6,7 +6,7 @@
     >
       <el-icon><DArrowLeft /></el-icon>
     </span>
-    <div class="flex-1 overflow-hidden">
+    <div class="tags-view__scroll">
       <el-scrollbar ref="scrollbarRef" class="h-full" @scroll="scroll">
         <div class="tags-view__wrapper">
           <el-dropdown
@@ -385,6 +385,11 @@ watch(
     height: 100%;
   }
 
+  &__scroll {
+    flex: 1;
+    overflow: hidden;
+  }
+
   &__wrapper {
     display: flex;
     height: 34px;
@@ -418,7 +423,7 @@ watch(
     display: inline-flex;
     align-items: center;
     height: calc(100% - 6px);
-    margin-left: 4px;
+    margin-left: 2px;
     font-size: 12px;
     cursor: pointer;
     background: #fff;
@@ -427,18 +432,18 @@ watch(
     box-sizing: border-box;
 
     &:first-of-type {
-      margin-left: 15px;
+      margin-left: 8px;
     }
 
     &:last-of-type {
-      margin-right: 15px;
+      margin-right: 8px;
     }
 
     &--label {
       display: flex;
       align-items: center;
       height: 100%;
-      padding: 0 15px 0 8px;
+      padding: 0 17px 0 8px;
       white-space: nowrap;
     }
 
