@@ -7,7 +7,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            {{ $t('dashboard.newVisits') }}
+            新增访问
           </div>
           <count-to :start-val="0" :end-val="140000" :duration="2600" class="card-panel-num" />
         </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            {{ $t('dashboard.messages') }}
+            消息
           </div>
           <count-to :start-val="0" :end-val="96" :duration="3000" class="card-panel-num" />
         </div>
@@ -33,7 +33,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            {{ $t('dashboard.purchase') }}
+            购买量
           </div>
           <count-to :start-val="0" :end-val="1024" :duration="3200" class="card-panel-num" />
         </div>
@@ -46,7 +46,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            {{ $t('dashboard.shopping') }}
+            购物
           </div>
           <count-to :start-val="0" :end-val="2048" :duration="3600" class="card-panel-num" />
         </div>

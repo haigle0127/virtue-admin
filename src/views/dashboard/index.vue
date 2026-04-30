@@ -19,7 +19,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'roles'
+      'roles',
+      'permissions'
     ])
   },
   created() {

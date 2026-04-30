@@ -236,6 +236,12 @@ $cursor: #fff;
     height: 47px;
     width: 85%;
 
+    .el-input__wrapper {
+      background: transparent;
+      box-shadow: none;
+      padding: 0;
+    }
+
     input {
       background: transparent;
       border: 0px;
@@ -316,7 +322,8 @@ $light_gray:#eee;
   .show-pwd {
     position: absolute;
     right: 10px;
-    top: 7px;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 16px;
     color: $dark_gray;
     cursor: pointer;

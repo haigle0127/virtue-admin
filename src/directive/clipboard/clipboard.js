@@ -1,6 +1,6 @@
 // Inspired by https://github.com/Inndy/vue-clipboard2
-const Clipboard = require('clipboard')
-if (!Clipboard) {
+import ClipboardJS from 'clipboard'
+if (!ClipboardJS) {
   throw new Error('you should npm install `clipboard` --save at first ')
 }
 
@@ -11,7 +11,7 @@ export default {
     } else if (binding.arg === 'error') {
       el._v_clipboard_error = binding.value
     } else {
-      const clipboard = new Clipboard(el, {
+      const clipboard = new ClipboardJS(el, {
         text() { return binding.value },
         action() { return binding.arg === 'cut' ? 'cut' : 'copy' }
       })
