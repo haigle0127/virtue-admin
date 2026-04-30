@@ -2,38 +2,85 @@
   <img width="320" src="http://haigle.gitee.io/static_resources/virtue/image/title.png">
 </p>
 
-
-简体中文 | [English](./README_en_US.md)
-
 ## 简介
 
-[virtue-admin](https://gitee.com/haigle/virtue-admin) 
-是[virtue](https://gitee.com/haigle/virtue) 后端的前端框架
+[virtue-admin](https://gitee.com/haigle/virtue-admin) 是 [virtue](https://gitee.com/haigle/virtue) 后端配套的前端管理框架。
 
-技术采用 [vue-element-admin](https://panjiachen.gitee.io/vue-element-admin-site/zh) 开源前端框架，它基于 [vue](https://cn.vuejs.org)（构建数据驱动的 web 界面的渐进式框架），[element-ui](https://element.eleme.cn) （基于 Vue 2.0 的桌面端组件库）
+基于 [vue-element-admin](https://gitee.com/panjiachen/vue-element-admin) 开源方案构建，采用 Vue 3 + Element Plus + Vite 技术栈。
 
-***
+## 技术栈
 
-**联系我们：鹅群672036656**
+- [Vue 3](https://cn.vuejs.org) — 渐进式 JavaScript 框架
+- [Element Plus](https://element-plus.org) — 基于 Vue 3 的桌面端组件库
+- [Vite](https://cn.vitejs.dev) — 下一代前端构建工具
+- [Vue Router 4](https://router.vuejs.org) — 官方路由管理器
+- [Vuex 4](https://vuex.vuejs.org) — 状态管理模式
+- [Axios](https://axios-http.com) — HTTP 客户端
+- [ECharts](https://echarts.apache.org) — 可视化图表库
 
-***
+## 功能特性
 
-## 结构
+- **登录认证** — 支持视频/图片随机动态背景
+- **首页仪表盘** — 数据面板与统计图表
+- **系统管理**
+  - 用户管理
+  - 角色管理
+  - 权限管理（菜单权限）
+- **主题换肤** — 支持动态切换主题色
+- **响应式布局** — 适配多端屏幕尺寸
+- **错误页面** — 401 / 404 友好提示
 
-[点击查看文档](https://panjiachen.github.io/vue-element-admin-site/zh/guide/)
+## 快速开始
 
-## 系统图片
+### 环境要求
 
-![登录页面 | center](https://haigle.gitee.io/static_resources/virtue/image/登录页面.jpg)
+- Node.js >= 16
+- npm >= 8
 
-![首页1 | center](https://haigle.gitee.io/static_resources/virtue/image/首页1.jpg)
+### 安装依赖
 
-![首页2 | center](https://haigle.gitee.io/static_resources/virtue/image/首页2.jpg)
+```bash
+npm install
+```
 
-![权限页面 | center](https://haigle.gitee.io/static_resources/virtue/image/权限页面.jpg)
+### 启动开发服务器
 
-## License
+```bash
+npm run dev
+```
 
-[MIT](https://gitee.com/haigle/virtue-admin/blob/master/LICENSE)
+服务默认运行在 http://localhost:9527
 
-virtue © 2015-2021.  [haigletech](www.haigle.cn)监制.
+### 生产构建
+
+```bash
+npm run build:prod
+```
+
+## 项目结构
+
+```
+virtue-admin
+├── public              # 静态资源
+├── src
+│   ├── api             # 接口请求
+│   ├── assets          # 图片、字体、视频等资源
+│   ├── components      # 公共组件
+│   ├── icons           # SVG 图标
+│   ├── layout          # 页面布局框架
+│   ├── router          # 路由配置
+│   ├── store           # Vuex 状态管理
+│   ├── styles          # 全局样式
+│   ├── utils           # 工具函数
+│   ├── views           # 页面视图
+│   │   ├── dashboard   # 首页仪表盘
+│   │   ├── login       # 登录页
+│   │   ├── system      # 系统管理
+│   │   └── theme       # 主题换肤
+│   ├── App.vue
+│   └── main.js
+├── vite.config.js      # Vite 配置
+└── package.json
+```
+
+virtue © 2015-2026. [haigletech](https://www.haigle.cn) 监制.
