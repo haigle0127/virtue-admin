@@ -1,41 +1,41 @@
-<p style="text-align: center;">
-  <img width="381" src=".image/title.png"  alt="">
-</p>
+# Virtue Admin
 
-## 简介
-
-[virtue-admin](https://gitee.com/haigle/virtue-admin) 是 [virtue](https://gitee.com/haigle/virtue) 后端配套的前端管理框架。
-
-Vue 3 + Element Plus + Vite 技术栈。
+基于 Vue 3 + Vite + TypeScript 的后台管理模板。
 
 ## 技术栈
 
-- [Vue 3](https://cn.vuejs.org) — 渐进式 JavaScript 框架
-- [Element Plus](https://element-plus.org) — 基于 Vue 3 的桌面端组件库
-- [Vite](https://cn.vitejs.dev) — 下一代前端构建工具
-- [Vue Router 4](https://router.vuejs.org) — 官方路由管理器
-- [Vuex 4](https://vuex.vuejs.org) — 状态管理模式
-- [Axios](https://axios-http.com) — HTTP 客户端
-- [ECharts](https://echarts.apache.org) — 可视化图表库
+- [Vue 3.5](https://vuejs.org/)
+- [Vite 7](https://vitejs.dev/)
+- [TypeScript 5](https://www.typescriptlang.org/)
+- [Element Plus](https://element-plus.org/)
+- [Vue Router 4](https://router.vuejs.org/)
+- [Pinia 3](https://pinia.vuejs.org/)
+- [UnoCSS](https://unocss.dev/)
+- [vxe-table](https://vxetable.cn/)
+- [Axios](https://axios-http.com/)
 
 ## 功能特性
 
-- **登录认证** — 支持视频/图片随机动态背景
-- **首页仪表盘** — 数据面板与统计图表
-- **系统管理**
-  - 用户管理
-  - 角色管理
-  - 权限管理（菜单权限）
-- **主题换肤** — 支持动态切换主题色
-- **响应式布局** — 适配多端屏幕尺寸
-- **错误页面** — 401 / 404 友好提示
+- 基于 Vue 3 Composition API + `<script setup>` 开发
+- 使用 TypeScript 进行类型约束，支持严格的类型检查
+- 基于 Element Plus 的组件库和主题定制
+- 集成 UnoCSS 原子化 CSS 引擎
+- 内置多种布局模式（左侧菜单、顶部菜单、混合菜单）
+- 内置多主题切换（明亮、暗黑、深蓝）
+- 内置权限控制（菜单级、按钮级）
+- 路由标签页（TagsView）和面包屑导航
+- 全局搜索菜单（Ctrl + K）
+- SVG 图标自动注册和雪碧图生成
+- 自动按需导入 Vue API 和组件
+- 代码规范和 ESLint 校验
+- 单元测试（Vitest）
 
 ## 快速开始
 
 ### 环境要求
 
-- Node.js >= 16
-- npm >= 8
+- Node.js >= 18
+- npm >= 9
 
 ### 安装依赖
 
@@ -49,38 +49,85 @@ npm install
 npm run dev
 ```
 
-服务默认运行在 http://localhost:9527
-
-### 生产构建
+### 构建
 
 ```bash
-npm run build:prod
+# 生产环境
+npm run build
+
+# 预发布环境
+npm run build:staging
+```
+
+### 预览构建产物
+
+```bash
+npm run preview
+```
+
+### 代码检查
+
+```bash
+npm run lint
+```
+
+### 单元测试
+
+```bash
+npm run test
 ```
 
 ## 项目结构
 
 ```
 virtue-admin
-├── public              # 静态资源
+├── public                     # 静态资源
 ├── src
-│   ├── api             # 接口请求
-│   ├── assets          # 图片、字体、视频等资源
-│   ├── components      # 公共组件
-│   ├── icons           # SVG 图标
-│   ├── layout          # 页面布局框架
-│   ├── router          # 路由配置
-│   ├── store           # Vuex 状态管理
-│   ├── styles          # 全局样式
-│   ├── utils           # 工具函数
-│   ├── views           # 页面视图
-│   │   ├── dashboard   # 首页仪表盘
-│   │   ├── login       # 登录页
-│   │   ├── system      # 系统管理
-│   │   └── theme       # 主题换肤
-│   ├── App.vue
-│   └── main.js
-├── vite.config.js      # Vite 配置
-└── package.json
+│   ├── common                 # 通用模块
+│   │   ├── apis               # 通用接口
+│   │   ├── assets             # 通用静态资源（图标、样式、图片）
+│   │   ├── components         # 通用组件
+│   │   ├── composables        # 通用组合式函数
+│   │   ├── constants          # 常量
+│   │   └── utils              # 工具函数
+│   ├── http                   # 网络请求封装（Axios）
+│   ├── layouts                # 布局系统
+│   │   ├── components         # 布局组件
+│   │   └── modes              # 布局模式
+│   ├── pages                  # 页面
+│   ├── pinia                  # 状态管理（Pinia）
+│   ├── plugins                # 插件（全局组件、指令等）
+│   ├── router                 # 路由配置
+│   ├── App.vue                # 根组件
+│   └── main.ts                # 入口文件
+├── types                      # 类型声明
+├── .env                       # 所有环境通用变量
+├── .env.development           # 开发环境变量
+├── .env.production            # 生产环境变量
+├── .env.staging               # 预发布环境变量
+├── eslint.config.js           # ESLint 配置
+├── tsconfig.json              # TypeScript 配置
+├── uno.config.ts              # UnoCSS 配置
+└── vite.config.ts             # Vite 配置
 ```
 
-virtue © 2015-2026. [haigletech](https://www.haigle.cn) 监制.
+## 开发规范
+
+- 使用路径别名 `@` 指向 `src` 目录，`@@` 指向 `src/common` 目录
+- 同一业务逻辑的代码和资源应当收拢在一起
+- 组件使用 PascalCase 命名，页面使用 kebab-case 命名
+- 组合式函数使用 camelCase 命名，以 `use` 开头
+- 优先使用 `ref` 定义响应式变量
+- Props 使用基于类型的声明，默认值使用响应式 Props 解构
+- 优先使用 Scoped CSS，多主题场景使用 CSS 变量
+
+## 浏览器兼容性
+
+- Chrome >= 88
+- Edge >= 88
+- Firefox >= 78
+- Safari >= 14
+
+## 开源协议
+
+[Apache-2.0](LICENSE)
