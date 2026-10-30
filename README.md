@@ -1,133 +1,143 @@
-# Virtue Admin
+# Virtue 管理后台
 
-基于 Vue 3 + Vite + TypeScript 的后台管理模板。
+`virtue-admin` 是 [virtue](../virtue) 后端的管理前端，基于 Nuxt 4 + Nuxt UI 4 构建，覆盖登录、仪表盘、用户、角色、字典与个人设置。
 
 ## 技术栈
 
-- [Vue 3.5](https://vuejs.org/)
-- [Vite 7](https://vitejs.dev/)
-- [TypeScript 5](https://www.typescriptlang.org/)
-- [Element Plus](https://element-plus.org/)
-- [Vue Router 4](https://router.vuejs.org/)
-- [Pinia 3](https://pinia.vuejs.org/)
-- [UnoCSS](https://unocss.dev/)
-- [vxe-table](https://vxetable.cn/)
-- [Axios](https://axios-http.com/)
+| 技术 | 版本 | 说明 |
+| --- | --- | --- |
+| Nuxt | 4.6 | SPA 模式（`ssr: false`） |
+| Nuxt UI | 4.12 | 组件库，含 UDashboard、UTable、UModal |
+| Tailwind CSS | 4.3 | 样式 |
+| Vue | 3.5 | 视图层 |
+| TypeScript | 6.0 | 类型 |
+| zod | 4.6 | 表单校验 |
+| VueUse | 14.4 | 组合式工具 |
+| pnpm | 12 | 包管理 |
 
-## 功能特性
+表格使用 Nuxt UI 的 `UTable`（底层为 TanStack Table），图标使用 Lucide。
 
-- 基于 Vue 3 Composition API + `<script setup>` 开发
-- 使用 TypeScript 进行类型约束，支持严格的类型检查
-- 基于 Element Plus 的组件库和主题定制
-- 集成 UnoCSS 原子化 CSS 引擎
-- 内置多种布局模式（左侧菜单、顶部菜单、混合菜单）
-- 内置多主题切换（明亮、暗黑、深蓝）
-- 内置权限控制（菜单级、按钮级）
-- 路由标签页（TagsView）和面包屑导航
-- 全局搜索菜单（Ctrl + K）
-- SVG 图标自动注册和雪碧图生成
-- 自动按需导入 Vue API 和组件
-- 代码规范和 ESLint 校验
-- 单元测试（Vitest）
+## 环境要求
 
-## 快速开始
+- Node.js 20+（CI 使用 24）
+- pnpm
+- 已启动的 virtue 后端，默认地址 `http://127.0.0.1:9981`
+- 后端数据库已导入 `virtue/sql/virtue.sql`
 
-### 环境要求
+## 配置
 
-- Node.js >= 18
-- npm >= 9
-
-### 安装依赖
+复制 `.env.example` 为 `.env`，按实际后端地址修改：
 
 ```bash
-npm install
+NUXT_PUBLIC_API_BASE=http://127.0.0.1:9981
 ```
 
-### 启动开发服务器
+未配置时使用 `nuxt.config.ts` 中 `runtimeConfig.public.apiBase` 的默认值。浏览器会直接请求该地址，后端已开启 CORS。
+
+## 启动
 
 ```bash
-npm run dev
+pnpm install
+pnpm dev
 ```
 
-### 构建
+访问 <http://localhost:3000>，默认账号：
+
+- 用户名：`admin`
+- 密码：`123456`
+
+> 默认账号仅用于本地开发，请勿用于生产环境。
+
+## 功能
+
+| 页面 | 路径 | 说明 |
+| --- | --- | --- |
+| 登录 | `/login` | 账号密码登录、显示/隐藏密码、深浅色切换 |
+| 仪表盘 | `/` | 用户/角色/字典类型/字典数据统计、最近 5 个用户、快捷入口 |
+| 用户管理 | `/system/users` | 按用户名/手机号/状态查询，新增、编辑、分配角色、重置密码、启停、单个与批量删除 |
+| 角色管理 | `/system/roles` | 按名称/标识/状态查询，新增、编辑、删除 |
+| 字典管理 | `/system/dict` | 字典类型维护；点击进入 `/system/dict/:type` 维护字典数据 |
+| 个人设置 | `/settings` | 查看资料、修改密码、外观切换、退出登录 |
+
+当前登录用户不能删除或停用自己；删除用户会同时吊销其登录状态。
+
+## 界面与快捷键
+
+- 侧边栏可折叠、可拖拽调整宽度，移动端以抽屉形式展开。
+- 顶部搜索面板可搜索页面，并提供“新建用户 / 新建角色 / 新建字典类型”快捷操作。
+- 页面快捷键：`g-h` 仪表盘、`g-u` 用户、`g-r` 角色、`g-d` 字典。
+- 深浅色主题可跟随系统，入口在登录页、侧边栏用户菜单和个人设置。
+- 危险操作统一使用 `ConfirmModal` 二次确认，不在删除前直接执行。
+
+## 鉴权说明
+
+- 登录成功后，`accessToken`（15 分钟）与 `refreshToken`（7 天）保存在 Cookie（`virtue_access_token`、`virtue_refresh_token`）中，同时用 `useState` 在页面内共享最新值。
+- 所有请求自动携带 `Authorization: Bearer <accessToken>`。
+- 访问令牌失效（HTTP 401 或响应体 `code === 401`）时自动调用 `/admin-api/auth/refresh-token` 刷新并重试原请求。
+- 后端会对刷新令牌做轮换与重放检测，因此前端采用单飞刷新：并发请求只发起一次刷新，其余请求复用结果，避免误触发重放导致会话被吊销。
+- 刷新失败会清空本地令牌并跳转 `/login`；未登录访问受保护页面会跳转 `/login?redirect=...`，登录后回到原页面。
+- 退出登录、修改密码会吊销当前会话并清理本地令牌。
+
+## 接口约定
+
+- 统一响应：`{ code, msg, data }`，`code === 200` 表示成功；其他 code 由 `useApi` 抛出 `ApiError`，页面用 toast 提示。
+- 分页数据：`{ list, total, pageNo }`，列表页使用后端分页，`pageSize` 默认 10。
+- 后端 `Long` 类型 ID 以字符串返回，前端按字符串处理。
+- 状态字段：用户、角色的 `status` 为数字（`0` 正常、`1` 停用）；字典的 `status` 为字符串 `"0"` / `"1"`。
+- 角色字段：后端返回 `mark` / `description` / `state`，前端表单使用 `code` / `description` / `status`。
+
+## 代码结构
+
+```text
+app/
+├── app.vue                    UApp 外壳、主题色与 SEO
+├── app.config.ts              Nuxt UI 配色（primary: green, neutral: zinc）
+├── assets/css/main.css        全局样式
+├── components/                业务弹窗与通用组件
+│   ├── AppLogo.vue
+│   ├── AppUserMenu.vue        用户菜单：设置、外观、退出
+│   ├── ConfirmModal.vue       统一确认弹窗
+│   ├── StatCard.vue           仪表盘统计卡片
+│   ├── UserFormModal.vue / UserPasswordModal.vue
+│   ├── RoleFormModal.vue
+│   └── DictTypeFormModal.vue / DictDataFormModal.vue
+├── composables/
+│   ├── useApi.ts              请求封装、单飞刷新、401 重试
+│   ├── useAuth.ts             登录、当前用户、退出
+│   ├── useSession.ts          令牌的 Cookie + useState 存储
+│   └── usePagedList.ts        服务端分页列表
+├── layouts/default.vue        侧边栏 + 搜索 + 快捷键
+├── middleware/auth.global.ts  全局登录守卫
+├── pages/                     登录、仪表盘、用户、角色、字典、设置
+├── plugins/auth.client.ts     启动时恢复登录态
+├── types/api.ts               接口类型定义
+└── utils/format.ts            格式化与表格通用样式
+```
+
+## 检查
 
 ```bash
-# 生产环境
-npm run build
-
-# 预发布环境
-npm run build:staging
+pnpm lint
+pnpm typecheck
 ```
 
-### 预览构建产物
+CI（`.github/workflows/ci.yml`）在 push 时执行 lint 与 typecheck（Node 24）。
+
+## 构建与部署
 
 ```bash
-npm run preview
+# Node 服务方式（产物在 .output）
+pnpm build
+node .output/server/index.mjs
+
+# 或生成静态站点，部署 .output/public 到 Nginx 等静态服务器
+pnpm generate
 ```
 
-### 代码检查
+默认监听 `3000` 端口，可通过 `PORT` 环境变量调整。部署时用 `NUXT_PUBLIC_API_BASE` 指定浏览器实际可访问的后端地址，并确保后端允许前端域名跨域；静态托管需要为前端路由配置 `index.html` 回退。
 
-```bash
-npm run lint
-```
+## 已知限制
 
-### 单元测试
-
-```bash
-npm run test
-```
-
-## 项目结构
-
-```
-virtue-admin
-├── public                     # 静态资源
-├── src
-│   ├── common                 # 通用模块
-│   │   ├── apis               # 通用接口
-│   │   ├── assets             # 通用静态资源（图标、样式、图片）
-│   │   ├── components         # 通用组件
-│   │   ├── composables        # 通用组合式函数
-│   │   ├── constants          # 常量
-│   │   └── utils              # 工具函数
-│   ├── http                   # 网络请求封装（Axios）
-│   ├── layouts                # 布局系统
-│   │   ├── components         # 布局组件
-│   │   └── modes              # 布局模式
-│   ├── pages                  # 页面
-│   ├── pinia                  # 状态管理（Pinia）
-│   ├── plugins                # 插件（全局组件、指令等）
-│   ├── router                 # 路由配置
-│   ├── App.vue                # 根组件
-│   └── main.ts                # 入口文件
-├── types                      # 类型声明
-├── .env                       # 所有环境通用变量
-├── .env.development           # 开发环境变量
-├── .env.production            # 生产环境变量
-├── .env.staging               # 预发布环境变量
-├── eslint.config.js           # ESLint 配置
-├── tsconfig.json              # TypeScript 配置
-├── uno.config.ts              # UnoCSS 配置
-└── vite.config.ts             # Vite 配置
-```
-
-## 开发规范
-
-- 使用路径别名 `@` 指向 `src` 目录，`@@` 指向 `src/common` 目录
-- 同一业务逻辑的代码和资源应当收拢在一起
-- 组件使用 PascalCase 命名，页面使用 kebab-case 命名
-- 组合式函数使用 camelCase 命名，以 `use` 开头
-- 优先使用 `ref` 定义响应式变量
-- Props 使用基于类型的声明，默认值使用响应式 Props 解构
-- 优先使用 Scoped CSS，多主题场景使用 CSS 变量
-
-## 浏览器兼容性
-
-- Chrome >= 88
-- Edge >= 88
-- Firefox >= 78
-- Safari >= 14
-
-## 开源协议
-
-[Apache-2.0](LICENSE)
+- 没有菜单、部门与按钮权限管理页面，路由固定，鉴权粒度只有后端角色。
+- 未接入验证码；后端验证码获取接口当前未启用。
+- 后端导出接口为占位实现，页面未提供导出功能。
