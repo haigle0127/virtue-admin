@@ -185,9 +185,24 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         <UFormField
           v-if="!isEdit"
           name="password"
-          label="初始密码"
-          description="留空默认为 123456"
         >
+          <template #label>
+            初始密码
+            <UPopover :content="{ side: 'top', align: 'start' }">
+              <button
+                type="button"
+                class="ms-1 inline-flex cursor-pointer align-middle text-muted transition-colors hover:text-default"
+                aria-label="初始密码说明"
+              >
+                <UIcon name="i-lucide-circle-help" class="size-3.5" />
+              </button>
+              <template #content>
+                <p class="px-3 py-2 text-sm">
+                  留空默认为 123456
+                </p>
+              </template>
+            </UPopover>
+          </template>
           <UInput
             v-model="state.password"
             type="password"

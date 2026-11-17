@@ -177,12 +177,6 @@ async function confirmBatchDelete() {
 function getRowItems(row: UserPageItem) {
   const self = isSelf(row)
   return [
-    { type: 'label' as const, label: '操作' },
-    {
-      label: '编辑资料',
-      icon: 'i-lucide-pencil',
-      onSelect: () => openEdit(row)
-    },
     {
       label: '重置密码',
       icon: 'i-lucide-key-round',
@@ -254,8 +248,17 @@ const columns: TableColumn<UserPageItem>[] = [
   },
   {
     id: 'actions',
-    header: '',
-    cell: ({ row }) => h('div', { class: 'flex justify-end' }, [
+    header: '操作',
+    meta: { class: { th: 'text-center' } },
+    cell: ({ row }) => h('div', { class: 'flex items-center justify-center gap-1' }, [
+      h(UButton, {
+        label: '编辑',
+        icon: 'i-lucide-pencil',
+        color: 'primary',
+        variant: 'ghost',
+        size: 'sm',
+        onClick: () => openEdit(row.original)
+      }),
       h(
         UDropdownMenu,
         {
@@ -263,10 +266,11 @@ const columns: TableColumn<UserPageItem>[] = [
           items: getRowItems(row.original)
         },
         () => h(UButton, {
-          icon: 'i-lucide-ellipsis-vertical',
-          color: 'neutral',
+          label: '更多',
+          icon: 'i-lucide-chevrons-right',
+          color: 'primary',
           variant: 'ghost',
-          square: true
+          size: 'sm'
         })
       )
     ])

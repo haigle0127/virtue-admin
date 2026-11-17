@@ -34,9 +34,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   loading.value = true
   try {
     await auth.login(event.data.username, event.data.password)
-    const redirect = typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/')
-      ? route.query.redirect
-      : '/'
+    // 只允许站内路径，挡住 // 与 /\ 开头的协议相对 URL 开放重定向
+    const raw = typeof route.query.redirect === 'string' ? route.query.redirect : ''
+    const redirect = raw.startsWith('/') && !raw.startsWith('//') && !raw.startsWith('/\\') ? raw : '/'
     await navigateTo(redirect)
   } catch (error) {
     toast.add({

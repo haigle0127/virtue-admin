@@ -126,12 +126,24 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           <UInput v-model="state.name" placeholder="例如：用户性别" class="w-full" />
         </UFormField>
 
-        <UFormField
-          name="type"
-          label="字典类型"
-          required
-          description="英文唯一标识"
-        >
+        <UFormField name="type" required>
+          <template #label>
+            字典类型
+            <UPopover :content="{ side: 'top', align: 'start' }">
+              <button
+                type="button"
+                class="ms-1 inline-flex cursor-pointer align-middle text-muted transition-colors hover:text-default"
+                aria-label="字典类型说明"
+              >
+                <UIcon name="i-lucide-circle-help" class="size-3.5" />
+              </button>
+              <template #content>
+                <p class="px-3 py-2 text-sm">
+                  英文唯一标识
+                </p>
+              </template>
+            </UPopover>
+          </template>
           <UInput v-model="state.type" placeholder="例如：system_user_sex" class="w-full" />
         </UFormField>
 

@@ -4,7 +4,6 @@ import type { PageResult, RoleItem } from '~/types/api'
 
 const UBadge = resolveComponent('UBadge')
 const UButton = resolveComponent('UButton')
-const UDropdownMenu = resolveComponent('UDropdownMenu')
 
 const api = useApi()
 const toast = useToast()
@@ -96,24 +95,6 @@ async function confirmDelete() {
   }
 }
 
-function getRowItems(row: RoleItem) {
-  return [
-    { type: 'label' as const, label: '操作' },
-    {
-      label: '编辑角色',
-      icon: 'i-lucide-pencil',
-      onSelect: () => openEdit(row)
-    },
-    { type: 'separator' as const },
-    {
-      label: '删除角色',
-      icon: 'i-lucide-trash-2',
-      color: 'error' as const,
-      onSelect: () => askDelete(row)
-    }
-  ]
-}
-
 const columns: TableColumn<RoleItem>[] = [
   {
     id: 'name',
@@ -162,21 +143,25 @@ const columns: TableColumn<RoleItem>[] = [
   },
   {
     id: 'actions',
-    header: '',
-    cell: ({ row }) => h('div', { class: 'flex justify-end' }, [
-      h(
-        UDropdownMenu,
-        {
-          content: { align: 'end' },
-          items: getRowItems(row.original)
-        },
-        () => h(UButton, {
-          icon: 'i-lucide-ellipsis-vertical',
-          color: 'neutral',
-          variant: 'ghost',
-          square: true
-        })
-      )
+    header: '操作',
+    meta: { class: { th: 'text-center' } },
+    cell: ({ row }) => h('div', { class: 'flex items-center justify-center gap-1' }, [
+      h(UButton, {
+        label: '编辑',
+        icon: 'i-lucide-pencil',
+        color: 'primary',
+        variant: 'ghost',
+        size: 'sm',
+        onClick: () => openEdit(row.original)
+      }),
+      h(UButton, {
+        label: '删除',
+        icon: 'i-lucide-trash-2',
+        color: 'error',
+        variant: 'ghost',
+        size: 'sm',
+        onClick: () => askDelete(row.original)
+      })
     ])
   }
 ]
